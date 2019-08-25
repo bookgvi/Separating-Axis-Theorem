@@ -25,7 +25,7 @@ import { mapGetters, mapActions } from 'vuex'
 import obj from './components/obj'
 export default {
   data: () => ({
-    objectCount: 11,
+    objectCount: 23,
     x: 0,
     y: 10,
     width: 30,

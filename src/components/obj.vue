@@ -16,7 +16,7 @@ export default {
   data: () => ({
     obj: {
       dx: 2,
-      dy: -2,
+      dy: 2,
       anim: '',
       hasMov: false
     },
