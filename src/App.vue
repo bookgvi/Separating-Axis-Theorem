@@ -10,8 +10,11 @@
       />
     </v-layer>
     <v-layer ref="main">
-      <obj :num=0 />
-      <obj :num=1 />
+      <obj
+        v-for="item in objectCount"
+        :key="item"
+        :num="item - 1"
+      />
     </v-layer>
     </v-stage>
   </div>
@@ -21,13 +24,23 @@
 import { mapGetters, mapActions } from 'vuex'
 import obj from './components/obj'
 export default {
+  data: () => ({
+    objectCount: 5,
+    x: 10,
+    y: 10,
+    width: 70,
+    height: 70
+  }),
   components: {
     obj
   },
   created () {
     this.setBorder()
-    this.setRect([0, { config: { x: 10, y: 10, width: 90, height: 90, fill: '#0095ee' } }])
-    this.setRect([1, { config: { x: 200, y: 10, width: 90, height: 90, fill: '#ee0000' } }])
+    for (let i = 0; i < this.objectCount; i++){
+      this.x += this.width + 5
+      this.setRect([i, { config: { x: this.x , y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
+    }
+    console.log(this.objects)
   },
   computed: {
     ...mapGetters([
