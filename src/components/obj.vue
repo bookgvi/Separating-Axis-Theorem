@@ -16,7 +16,7 @@ export default {
   data: () => ({
     obj: {
       dx: 2,
-      dy: 2,
+      dy: -2,
       anim: '',
       hasMov: false
     },
@@ -75,10 +75,16 @@ export default {
           if ((self.width + self.x >= item.config.x && self.width + self.x <= item.config.x + item.config.width) ||
             (self.x <= item.config.width + item.config.x && self.x >= item.config.x)) {
             this.xP = true
+            if (self.x > item.config.x + item.config.width || self.x + self.width < item.config.x) {
+              this.xP = false
+            }
           }
-          if ((self.y + self.heght >= item.config.y && self.y + self.height <= item.config.height + item.config.y) ||
+          if ((self.y + self.height >= item.config.y && self.y + self.height <= item.config.height + item.config.y) ||
             (self.y <= item.config.y + item.config.height && self.y >= item.config.y)) {
             this.yP = true
+            if (self.y + self.height < item.config.y || self.y > item.config.y + item.config.height) {
+              this.yP = false
+            }
           }
           else {
             this.xP = this.yP = false

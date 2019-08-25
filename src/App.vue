@@ -25,11 +25,11 @@ import { mapGetters, mapActions } from 'vuex'
 import obj from './components/obj'
 export default {
   data: () => ({
-    objectCount: 15,
-    x: 10,
+    objectCount: 11,
+    x: 0,
     y: 10,
-    width: 70,
-    height: 70
+    width: 30,
+    height: 30
   }),
   components: {
     obj
@@ -37,8 +37,8 @@ export default {
   created () {
     this.setBorder()
     for (let i = 0; i < this.objectCount; i++){
-      this.x += this.width + 5
       this.setRect([i, { config: { x: this.x , y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
+      this.x += this.width + 5
     }
   },
   computed: {
