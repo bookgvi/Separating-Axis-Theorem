@@ -40,7 +40,6 @@ export default {
       this.x += this.width + 5
       this.setRect([i, { config: { x: this.x , y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
     }
-    console.log(this.objects)
   },
   computed: {
     ...mapGetters([
