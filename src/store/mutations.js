@@ -2,7 +2,7 @@ import * as types from './mutation-types'
 import Vue from 'vue'
 
 export const mutations = {
-  [types.GET_FPS]: (state, fps) => state.fps = fps,
+  [types.GET_FPS]: (state, fps) => { state.fps = fps },
   [types.SET_BORDER]: state => {
     Vue.set(state.border.config.points, 0, state.border.config.strokeWidth)
     Vue.set(state.border.config.points, 1, state.border.config.strokeWidth)

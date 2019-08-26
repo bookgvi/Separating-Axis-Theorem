@@ -36,8 +36,8 @@ export default {
   },
   created () {
     this.setBorder()
-    for (let i = 0; i < this.objectCount; i++){
-      this.setRect([i, { config: { x: this.x , y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
+    for (let i = 0; i < this.objectCount; i++) {
+      this.setRect([i, { config: { x: this.x, y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
       this.x += this.width + 5
     }
   },

@@ -33,6 +33,7 @@ export default {
     ])
   },
   mounted () {
+    // eslint-disable-next-line no-undef
     this.obj.anim = new Konva.Animation((frame) => {
       this.setMovement([this.num, this.obj.dx, this.obj.dy]) // numInArrayOfObjects = 0, dx = 2, dy = 2
       this.isCollisionWithBorders()
@@ -88,8 +89,7 @@ export default {
               this.yP = false
               this.direction = ''
             }
-          }
-          else {
+          } else {
             this.xP = this.yP = false
             this.direction = ''
           }
