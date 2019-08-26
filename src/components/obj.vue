@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
@@ -21,9 +22,9 @@ export default {
       hasMov: false
     },
     collisions: {
-      xP: false,
-      yP: false,
-      direction: ''
+      xP: {},
+      yP: {},
+      direction: {}
     }
   }),
   computed: {
@@ -31,6 +32,11 @@ export default {
       'stage',
       'objects'
     ])
+  },
+  created() {
+    this.objects.forEach((i, index) => {
+      Vue.set(this.collisions.direction, index, [])
+    })
   },
   mounted () {
     // eslint-disable-next-line no-undef
@@ -70,36 +76,41 @@ export default {
     },
     isCollisionsWithObj () {
       const self = this.objects[this.num].config
-      this.objects.forEach(item => {
+      this.objects.forEach((item, index) => {
         if (this.objects[this.num] !== item) {
           if ((self.width + self.x >= item.config.x && self.width + self.x <= item.config.x + item.config.width) ||
             (self.x <= item.config.width + item.config.x && self.x >= item.config.x)) {
-            this.xP = true
-            if (!this.direction) { this.direction = 'this.xP' }
-            if (self.x > item.config.x + item.config.width || self.x + self.width < item.config.x) {
-              this.xP = false
-              this.direction = ''
+            Vue.set(this.collisions.xP, index, true)
+            if (this.collisions.direction[index][0] !== 'xP') {
+              this.collisions.direction[index].push('xP')
+            }
+            if (self.x + self.width <= item.config.x || self.x >= item.config.x + item.config.width) {
+              Vue.set(this.collisions.xP, index, false)
+              this.collisions.direction[index].pop()
             }
           }
           if ((self.y + self.height >= item.config.y && self.y + self.height <= item.config.height + item.config.y) ||
             (self.y <= item.config.y + item.config.height && self.y >= item.config.y)) {
-            this.yP = true
-            if (!this.direction) { this.direction = 'this.yP' }
-            if (self.y + self.height < item.config.y || self.y > item.config.y + item.config.height) {
-              this.yP = false
-              this.direction = ''
+            Vue.set(this.collisions.yP, index, true)
+            if (this.collisions.direction[index][0] !== 'yP') {
+              this.collisions.direction[index].push('yP')
+            }
+            if (self.y + self.height <= item.config.y || self.y >= item.config.y + item.config.height) {
+              Vue.set(this.collisions.yP, index, false)
+              this.collisions.direction[index].pop()
             }
           } else {
-            this.xP = this.yP = false
-            this.direction = ''
+            this.collisions.xP[index] = this.collisions.yP[index] = false
+            this.collisions.direction[index] = []
           }
-          if (this.xP && this.yP) {
-            if (this.direction === 'this.xP') {
+          if (this.collisions.xP[index] && this.collisions.yP[index]) {
+            if (this.collisions.direction[index][1] === 'xP') {
               this.obj.dx = -this.obj.dx
+            } else {
               this.obj.dy = -this.obj.dy
             }
-            this.direction === 'this.yP' ? this.obj.dy = -this.obj.dy : this.obj.dx = -this.obj.dx
-            this.xP = this.yP = false
+            this.collisions.xP[index] = this.collisions.yP[index] = false
+            this.collisions.direction[index] = []
           }
         }
       })
