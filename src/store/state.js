@@ -1,6 +1,7 @@
 const offsetX = 150
 const offsetY = 20
 export const state = {
+  fps: '',
   stage: {
     config: {
       x: offsetX,

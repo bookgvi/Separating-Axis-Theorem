@@ -22,7 +22,8 @@ export default {
     },
     collisions: {
       xP: false,
-      yP: false
+      yP: false,
+      direction: ''
     }
   }),
   computed: {
@@ -32,7 +33,7 @@ export default {
     ])
   },
   mounted () {
-    this.obj.anim = new Konva.Animation(() => {
+    this.obj.anim = new Konva.Animation((frame) => {
       this.setMovement([this.num, this.obj.dx, this.obj.dy]) // numInArrayOfObjects = 0, dx = 2, dy = 2
       this.isCollisionWithBorders()
       this.isCollisionsWithObj()
@@ -44,7 +45,8 @@ export default {
   methods: {
     ...mapActions([
       'setMovement',
-      'setRect'
+      'setRect',
+      'getFps'
     ]),
     changeMoveStatus (obj) {
       if (!obj.hasMov) {
@@ -58,9 +60,7 @@ export default {
     isCollisionWithBorders () {
       let border = this.stage.config
       let self = this.objects[this.num].config
-      // let y = Math.max(self.y + self.height, border.height)
-      if (
-        self.y + self.height >= border.height - border.y || self.y <= 0) {
+      if (self.y + self.height >= border.height - border.y || self.y <= 0) {
         this.obj.dy = -this.obj.dy
       }
       if (self.x + self.width >= border.width - border.x || self.x <= 0) {
@@ -69,29 +69,36 @@ export default {
     },
     isCollisionsWithObj () {
       const self = this.objects[this.num].config
-      let dx, dy
       this.objects.forEach(item => {
         if (this.objects[this.num] !== item) {
           if ((self.width + self.x >= item.config.x && self.width + self.x <= item.config.x + item.config.width) ||
             (self.x <= item.config.width + item.config.x && self.x >= item.config.x)) {
             this.xP = true
+            if (!this.direction) { this.direction = 'this.xP' }
             if (self.x > item.config.x + item.config.width || self.x + self.width < item.config.x) {
               this.xP = false
+              this.direction = ''
             }
           }
           if ((self.y + self.height >= item.config.y && self.y + self.height <= item.config.height + item.config.y) ||
             (self.y <= item.config.y + item.config.height && self.y >= item.config.y)) {
             this.yP = true
+            if (!this.direction) { this.direction = 'this.yP' }
             if (self.y + self.height < item.config.y || self.y > item.config.y + item.config.height) {
               this.yP = false
+              this.direction = ''
             }
           }
           else {
             this.xP = this.yP = false
+            this.direction = ''
           }
           if (this.xP && this.yP) {
-            this.obj.dx = -this.obj.dx
-            this.obj.dy = -this.obj.dy
+            if (this.direction === 'this.xP') {
+              this.obj.dx = -this.obj.dx
+              this.obj.dy = -this.obj.dy
+            }
+            this.direction === 'this.yP' ? this.obj.dy = -this.obj.dy : this.obj.dx = -this.obj.dx
             this.xP = this.yP = false
           }
         }

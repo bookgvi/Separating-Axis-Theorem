@@ -45,7 +45,8 @@ export default {
     ...mapGetters([
       'stage',
       'border',
-      'objects'
+      'objects',
+      'fps'
     ])
   },
   methods: {
