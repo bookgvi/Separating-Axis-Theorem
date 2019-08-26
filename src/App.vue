@@ -37,7 +37,19 @@ export default {
   created () {
     this.setBorder()
     for (let i = 0; i < this.objectCount; i++) {
-      this.setRect([i, { config: { x: this.x, y: this.y, width: this.width, height: this.height, fill: '#0095ee' } }])
+      this.setRect([i, {
+        config: {
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height,
+          fill: '#0095ee',
+          shadowColor: '#000000',
+          shadowBlur: 10,
+          shadowOpacity: 0.5,
+          shadowOffset: { x: 5, y: 5 }
+        }
+      }])
       this.x += this.width + 5
     }
   },
