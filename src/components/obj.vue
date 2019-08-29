@@ -84,10 +84,10 @@ export default {
             if (this.collisions.direction[index][0] !== 'xP') {
               this.collisions.direction[index].push('xP')
             }
-            if (self.x + self.width <= item.config.x || self.x >= item.config.x + item.config.width) {
-              Vue.set(this.collisions.xP, index, false)
-              this.collisions.direction[index].pop()
-            }
+            // if (self.x + self.width <= item.config.x || self.x >= item.config.x + item.config.width) {
+            //   Vue.set(this.collisions.xP, index, false)
+            //   this.collisions.direction[index].pop()
+            // }
           }
           if ((self.y + self.height >= item.config.y && self.y + self.height <= item.config.height + item.config.y) ||
             (self.y <= item.config.y + item.config.height && self.y >= item.config.y)) {
@@ -95,10 +95,10 @@ export default {
             if (this.collisions.direction[index][0] !== 'yP') {
               this.collisions.direction[index].push('yP')
             }
-            if (self.y + self.height <= item.config.y || self.y >= item.config.y + item.config.height) {
-              Vue.set(this.collisions.yP, index, false)
-              this.collisions.direction[index].pop()
-            }
+            // if (self.y + self.height <= item.config.y || self.y >= item.config.y + item.config.height) {
+            //   Vue.set(this.collisions.yP, index, false)
+            //   this.collisions.direction[index].pop()
+            // }
           } else {
             this.collisions.xP[index] = this.collisions.yP[index] = false
             this.collisions.direction[index] = []
